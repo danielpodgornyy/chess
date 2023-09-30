@@ -1,7 +1,19 @@
-#include <iostream>
-using namespace std;
+#include <SFML/Graphics.hpp>
 
 int main()
 {
-	cout << "HELLO WORLD" << endl;
+    sf::Window window(sf::VideoMode(800, 600), "Bababooey");
+     
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+    }
+    return 0;
 }
