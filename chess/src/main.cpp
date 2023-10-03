@@ -4,18 +4,20 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1920,1080), "Chess", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(1920,1080), "Chess", sf::Style::Default);
+	window.setFramerateLimit(60);
+	window.setKeyRepeatEnabled(false);
 
 	Game currGame;
 	
 
 	sf::Vector2i mouseWinPos;
-	sf::Vector2u mouseGridPos;
 
 
 	currGame.InitBoard();
 	currGame.InitText();
-
+	currGame.InitCharArray();
+	
 	while (window.isOpen())
 	{
 		sf::Event currEvent;
@@ -28,16 +30,19 @@ int main()
 			}
 		}
 
-		//mouseWinPos = sf::Mouse::getPosition(window);
-		//mouseGridPos.x = mouseWinPos.x / unsigned_tileSize;
-		//mouseGridPos.y = mouseWinPos.y / unsigned_tileSize;
-	
+		mouseWinPos = sf::Mouse::getPosition(window);
 
+		currGame.SelectSquare(mouseWinPos);
 
+		//Clear
 		window.clear(sf::Color(28,28,28));
 
+		//Build Game Board
 		currGame.BuildBoard(window);
 		currGame.BuildText(window);
+		currGame.BuildCharArray(window);
+
+		//Display
 		window.display();
 	}
 

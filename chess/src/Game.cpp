@@ -10,6 +10,16 @@ void Game::BuildBoard(sf::RenderWindow& inputWindow)
 	chessBoard.BuildBoard(inputWindow);
 }
 
+void Game::InitCharArray()
+{
+	chessBoard.InitCharArray();
+}
+
+void Game::BuildCharArray(sf::RenderWindow& inputWindow)
+{
+	chessBoard.BuildCharArray(inputWindow);
+}
+
 void Game::InitText()
 {
 	font.loadFromFile("OpenSans-Bold.ttf");
@@ -24,4 +34,14 @@ void Game::InitText()
 void Game::BuildText(sf::RenderWindow& inputWindow)
 {
 	inputWindow.draw(title);
+}
+
+
+void Game::SelectSquare(sf::Vector2i mousePos)
+{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		chessBoard.SelectSquare(mousePos);
+		std::cout << "hi" << std::endl;
+	}
 }
