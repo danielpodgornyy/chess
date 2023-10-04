@@ -17,12 +17,32 @@ void ChessChar::setColor(bool inputBool)
 	color = inputBool;
 }
 
+void ChessChar::setSelected(bool inputBool)
+{
+	selected = inputBool;
+}
+
+void ChessChar::setIndex(sf::Vector2i inputIndex)
+{
+	index = inputIndex;
+}
+
 void ChessChar::isOpenSquare(bool inputBool)
 {
 	isMovable = inputBool;
 }
 
+sf::Vector2i ChessChar::getIndex()
+{
+	return index;
+}
+
 sf::Sprite ChessChar::GetSprite()
 {
 	return charSprite;
+}
+
+bool ChessChar::getSelected()
+{
+	return selected;
 }

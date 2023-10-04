@@ -83,8 +83,14 @@ void Board::InitCharArray()
 			}
 			charArray[i][j]->InitSprite();
 			charArray[i][j]->SetPos(i * DEFAULT_SIZEf + 560.f, j * DEFAULT_SIZEf + 140.f);
+			charArray[i][j]->setIndex(sf::Vector2i(i, j));
 		}
 	}
+
+	charArray[0][7]->setSelected(true);
+	selectedSq = charArray[0][7];
+	tileArray[0][7].setOutlineThickness(-2);
+	tileArray[0][7].setOutlineColor(sf::Color::Green);
 }
 
 void Board::BuildCharArray(sf::RenderWindow& inputWindow)
@@ -100,9 +106,85 @@ void Board::BuildCharArray(sf::RenderWindow& inputWindow)
 }
 
 
-void Board::SelectSquare(sf::Vector2i mousePos)
+void Board::SelectSquare(char movementDescision)
 {
-	sf::Vector2u gridPos(mousePos.x / unsigned_DEFAULT_SIZE - 560.f, mousePos.y / unsigned_DEFAULT_SIZE - 140.f);
+	int xCoord = selectedSq->getIndex().x;
+	int yCoord = selectedSq->getIndex().y;
+
+	if (movementDescision == 'W')
+	{
+		if (yCoord - 1 < 0)
+		{
+			return;
+		}
+
+		selectedSq->setSelected(false);
+		tileArray[xCoord][yCoord].setOutlineThickness(0);
+
+		charArray[xCoord][yCoord - 1]->setSelected(true);
+
+		tileArray[xCoord][yCoord - 1].setOutlineThickness(-2);
+		tileArray[xCoord][yCoord - 1].setOutlineColor(sf::Color::Green);
+
+		selectedSq = charArray[xCoord][yCoord - 1];
+	}
+	else if (movementDescision == 'A')
+	{
+		if (xCoord - 1 < 0)
+		{
+			return;
+		}
+
+		selectedSq->setSelected(false);
+		tileArray[xCoord][yCoord].setOutlineThickness(0);
+
+		charArray[xCoord - 1][yCoord]->setSelected(true);
+
+		tileArray[xCoord - 1][yCoord].setOutlineThickness(-2);
+		tileArray[xCoord - 1][yCoord].setOutlineColor(sf::Color::Green);
+
+		selectedSq = charArray[xCoord - 1][yCoord];
+	}
+	else if (movementDescision == 'S')
+	{
+		if (yCoord + 1 > 7)
+		{
+			return;
+		}
+
+		selectedSq->setSelected(false);
+		tileArray[xCoord][yCoord].setOutlineThickness(0);
+
+		charArray[xCoord ][yCoord + 1]->setSelected(true);
+
+		tileArray[xCoord][yCoord + 1].setOutlineThickness(-2);
+		tileArray[xCoord][yCoord + 1].setOutlineColor(sf::Color::Green);
+
+		selectedSq = charArray[xCoord][yCoord + 1];
+	}
+	else if (movementDescision == 'D')
+	{
+		if (xCoord + 1 > 7)
+		{
+			return;
+		}
+
+		selectedSq->setSelected(false);
+		tileArray[xCoord][yCoord].setOutlineThickness(0);
+
+		charArray[xCoord + 1][yCoord]->setSelected(true);
+
+		tileArray[xCoord + 1][yCoord].setOutlineThickness(-2);
+		tileArray[xCoord + 1][yCoord].setOutlineColor(sf::Color::Green);
+
+		selectedSq = charArray[xCoord + 1][yCoord];
+	}
+
+	//MOUSE SELECTION SQUARE USING MOUSE DO LATER
+	/*
+	sf::Vector2u gridPos((mousePos.x / unsigned_DEFAULT_SIZE) - 560, (mousePos.y / unsigned_DEFAULT_SIZE) - 140);
+	std::cout << gridPos.x << " " << gridPos.y << std::endl;
+
 
 
 	for (int i = 0; i < 8; i++)
@@ -111,9 +193,13 @@ void Board::SelectSquare(sf::Vector2i mousePos)
 		{
 			if (gridPos == static_cast<sf::Vector2u>(charArray[i][j]->GetSprite().getPosition()))
 			{
-				charArray[i][j]->GetSprite().setRotation(2);
+				tileArray[i][j].setFillColor(sf::Color::Black);
+				std::cout << charArray[i][j]->GetSprite().getPosition().x << " " << charArray[i][j]->GetSprite().getPosition().y << std::endl;
+				std::cout << gridPos.x << " " << gridPos.y << std::endl;
 			}
 		}
 	}
+
+	*/
 	
 }

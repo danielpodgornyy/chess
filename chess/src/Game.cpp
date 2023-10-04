@@ -37,11 +37,7 @@ void Game::BuildText(sf::RenderWindow& inputWindow)
 }
 
 
-void Game::SelectSquare(sf::Vector2i mousePos)
+void Game::SelectSquare(char movementDescision)
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	{
-		chessBoard.SelectSquare(mousePos);
-		std::cout << "hi" << std::endl;
-	}
+	chessBoard.SelectSquare(movementDescision);
 }
