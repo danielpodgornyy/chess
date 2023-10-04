@@ -46,6 +46,7 @@ void Board::InitCharArray()
 			if (j == 6)
 			{
 				charArray[i][j] = new Pawn;
+				charArray[i][j]->setCharType('p');
 			}
 			else if (j == 7)
 			{
@@ -53,27 +54,35 @@ void Board::InitCharArray()
 				{
 				case 0:
 					charArray[i][j] = new Rook;
+					charArray[i][j]->setCharType('r');
 					break;
 				case 1:
 					charArray[i][j] = new Knight;
+					charArray[i][j]->setCharType('k');
 					break;
 				case 2:
 					charArray[i][j] = new Bishop;
+					charArray[i][j]->setCharType('b');
 					break;
 				case 3:
 					charArray[i][j] = new Queen;
+					charArray[i][j]->setCharType('Q');
 					break;
 				case 4:
 					charArray[i][j] = new King;
+					charArray[i][j]->setCharType('K');
 					break;
 				case 5:
 					charArray[i][j] = new Bishop;
+					charArray[i][j]->setCharType('b');
 					break;
 				case 6:
 					charArray[i][j] = new Knight;
+					charArray[i][j]->setCharType('k');
 					break;
 				case 7:
 					charArray[i][j] = new Rook;
+					charArray[i][j]->setCharType('r');
 					break;
 				}
 			}
@@ -118,6 +127,18 @@ void Board::SelectSquare(char movementDescision)
 			return;
 		}
 
+		if (selectedSq->getLockIn() == true)
+		{
+			switch (selectedSq->getCharType())
+			{
+			case 'p':
+				tileArray[xCoord][yCoord - 1].setFillColor(sf::Color::Red);
+				tileArray[xCoord][yCoord - 2].setFillColor(sf::Color::Red);
+				break;
+			}
+
+		}
+
 		selectedSq->setSelected(false);
 		tileArray[xCoord][yCoord].setOutlineThickness(0);
 
@@ -136,6 +157,7 @@ void Board::SelectSquare(char movementDescision)
 		}
 
 		selectedSq->setSelected(false);
+		selectedSq->setLockIn(false);
 		tileArray[xCoord][yCoord].setOutlineThickness(0);
 
 		charArray[xCoord - 1][yCoord]->setSelected(true);
@@ -153,6 +175,7 @@ void Board::SelectSquare(char movementDescision)
 		}
 
 		selectedSq->setSelected(false);
+		selectedSq->setLockIn(false);
 		tileArray[xCoord][yCoord].setOutlineThickness(0);
 
 		charArray[xCoord ][yCoord + 1]->setSelected(true);
@@ -170,6 +193,7 @@ void Board::SelectSquare(char movementDescision)
 		}
 
 		selectedSq->setSelected(false);
+		selectedSq->setLockIn(false);
 		tileArray[xCoord][yCoord].setOutlineThickness(0);
 
 		charArray[xCoord + 1][yCoord]->setSelected(true);
@@ -205,7 +229,18 @@ void Board::SelectSquare(char movementDescision)
 
 void Board::EnterSquare()
 {
+	int xCoord = selectedSq->getIndex().x;
+	int yCoord = selectedSq->getIndex().y;
+
 	selectedSq->setLockIn(true);
 	
 	tileArray[selectedSq->getIndex().x][selectedSq->getIndex().y].setOutlineColor(sf::Color::Blue);
+
+	switch (selectedSq->getCharType())
+	{
+	case 'p':
+		tileArray[xCoord][yCoord - 1].setFillColor(sf::Color::Red);
+		tileArray[xCoord][yCoord - 2].setFillColor(sf::Color::Red);
+		break;
+	}
 }

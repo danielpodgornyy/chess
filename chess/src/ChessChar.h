@@ -16,6 +16,8 @@ class ChessChar
 		void isOpenSquare(bool inputBool);
 		void setIndex(sf::Vector2i inputIndex);
 		void setLockIn(bool inputBool);
+		void setCharType(char inputChar);
+		char getCharType();
 		bool getLockIn();
 		sf::Vector2i getIndex();
 		bool getSelected();
@@ -25,6 +27,7 @@ class ChessChar
 		bool isMovable;
 		bool selected = false; //Move through board;
 		bool lockIn = false; //Ready to move
+		char charType = ' ';
 		sf::Vector2i index;
 		sf::Sprite charSprite;
 		sf::Texture charTex;

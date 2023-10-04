@@ -32,6 +32,16 @@ void ChessChar::setLockIn(bool inputBool)
 	lockIn = inputBool;
 }
 
+void ChessChar::setCharType(char inputChar)
+{
+	charType = inputChar;
+}
+
+char ChessChar::getCharType()
+{
+	return charType;
+}
+
 bool ChessChar::getLockIn()
 {
 	return lockIn;

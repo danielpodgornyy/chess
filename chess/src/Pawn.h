@@ -6,5 +6,5 @@ class Pawn : public ChessChar
 		void InitSprite() override;
 
 	private:
-		
+		char charType = 'p';
 };

@@ -6,5 +6,5 @@ public:
 	void InitSprite() override;
 
 private:
-
+	char charType = 'K';
 };
