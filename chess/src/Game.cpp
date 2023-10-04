@@ -41,3 +41,8 @@ void Game::SelectSquare(char movementDescision)
 {
 	chessBoard.SelectSquare(movementDescision);
 }
+
+void Game::EnterSquare()
+{
+	chessBoard.EnterSquare();
+}

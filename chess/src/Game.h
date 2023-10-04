@@ -13,6 +13,7 @@ class Game
 		void BuildText(sf::RenderWindow& inputWindow);
 
 		void SelectSquare(char movementDescision);
+		void EnterSquare();
 	private:
 		Board chessBoard;
 		sf::Text title;

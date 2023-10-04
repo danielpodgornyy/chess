@@ -15,13 +15,16 @@ class ChessChar
 		void setSelected(bool inputBool);
 		void isOpenSquare(bool inputBool);
 		void setIndex(sf::Vector2i inputIndex);
+		void setLockIn(bool inputBool);
+		bool getLockIn();
 		sf::Vector2i getIndex();
 		bool getSelected();
 		sf::Sprite GetSprite();
 	protected:
 		bool color; //1 for white, 0 for black
 		bool isMovable;
-		bool selected = false;
+		bool selected = false; //Move through board;
+		bool lockIn = false; //Ready to move
 		sf::Vector2i index;
 		sf::Sprite charSprite;
 		sf::Texture charTex;

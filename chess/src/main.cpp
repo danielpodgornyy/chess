@@ -48,6 +48,10 @@ int main()
 			{
 				currGame.SelectSquare('D');
 			}
+			else if (currEvent.type == currEvent.KeyReleased && currEvent.key.code == sf::Keyboard::Enter)
+			{
+				currGame.EnterSquare();
+			}
 		}
 
 		//if (currGame.get)

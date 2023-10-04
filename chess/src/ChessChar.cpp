@@ -27,6 +27,16 @@ void ChessChar::setIndex(sf::Vector2i inputIndex)
 	index = inputIndex;
 }
 
+void ChessChar::setLockIn(bool inputBool)
+{
+	lockIn = inputBool;
+}
+
+bool ChessChar::getLockIn()
+{
+	return lockIn;
+}
+
 void ChessChar::isOpenSquare(bool inputBool)
 {
 	isMovable = inputBool;

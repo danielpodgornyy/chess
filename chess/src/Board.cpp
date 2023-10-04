@@ -200,6 +200,12 @@ void Board::SelectSquare(char movementDescision)
 		}
 	}
 
-	*/
+	*/	
+}
+
+void Board::EnterSquare()
+{
+	selectedSq->setLockIn(true);
 	
+	tileArray[selectedSq->getIndex().x][selectedSq->getIndex().y].setOutlineColor(sf::Color::Blue);
 }
