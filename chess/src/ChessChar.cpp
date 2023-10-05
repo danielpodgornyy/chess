@@ -47,7 +47,7 @@ bool ChessChar::getLockIn()
 	return lockIn;
 }
 
-void ChessChar::isOpenSquare(bool inputBool)
+void ChessChar::setIsOpenSquare(bool inputBool)
 {
 	isMovable = inputBool;
 }

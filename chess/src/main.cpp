@@ -63,6 +63,7 @@ int main()
 		currGame.BuildBoard(window);
 		currGame.BuildText(window);
 		currGame.BuildCharArray(window);
+		currGame.BuildOptions(window);
 
 		//Display
 		window.display();

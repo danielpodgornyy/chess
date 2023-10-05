@@ -13,6 +13,7 @@ class Board //: public sf::Drawable, public sf::Transformable
 		void BuildBoard(sf::RenderWindow& inputWindow);
 		void InitCharArray();
 		void BuildCharArray(sf::RenderWindow& inputWindow);
+		void BuildOptions(sf::RenderWindow& inputWindow);
 
 		void SelectSquare(char movementDescision);
 		void EnterSquare();
@@ -20,6 +21,7 @@ class Board //: public sf::Drawable, public sf::Transformable
 		sf::RectangleShape tileArray[8][8];
 		ChessChar* charArray[8][8];
 		ChessChar* selectedSq;
+		std::list<sf::CircleShape> optionDots;
 		const float DEFAULT_SIZEf = 100.f;
 		unsigned unsigned_DEFAULT_SIZE = static_cast<unsigned>(DEFAULT_SIZEf);
 };

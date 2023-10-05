@@ -12,6 +12,8 @@ class Game
 		void InitText();
 		void BuildText(sf::RenderWindow& inputWindow);
 
+		void BuildOptions(sf::RenderWindow& inputWindow);
+
 		void SelectSquare(char movementDescision);
 		void EnterSquare();
 	private:

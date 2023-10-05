@@ -36,6 +36,10 @@ void Game::BuildText(sf::RenderWindow& inputWindow)
 	inputWindow.draw(title);
 }
 
+void Game::BuildOptions(sf::RenderWindow& inputWindow)
+{
+	chessBoard.BuildOptions(inputWindow);
+}
 
 void Game::SelectSquare(char movementDescision)
 {

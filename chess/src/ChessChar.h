@@ -4,7 +4,8 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
-#include "iostream"
+#include <iostream>
+#include <list>
 
 class ChessChar
 {
@@ -13,7 +14,7 @@ class ChessChar
 		void SetPos(float inputVal1, float inputVal2);
 		void setColor(bool inputBool);
 		void setSelected(bool inputBool);
-		void isOpenSquare(bool inputBool);
+		void setIsOpenSquare(bool inputBool);
 		void setIndex(sf::Vector2i inputIndex);
 		void setLockIn(bool inputBool);
 		void setCharType(char inputChar);
@@ -27,7 +28,7 @@ class ChessChar
 		bool isMovable;
 		bool selected = false; //Move through board;
 		bool lockIn = false; //Ready to move
-		char charType = ' ';
+		char charType = 'E';
 		sf::Vector2i index;
 		sf::Sprite charSprite;
 		sf::Texture charTex;
