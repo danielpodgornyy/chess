@@ -13,6 +13,8 @@ int main()
 	//Mouse Position
 	sf::Vector2i mouseWinPos;
 
+	bool elementSelected = false;
+
 	//Initiallize game
 	currGame.InitBoard();
 	currGame.InitText();
@@ -50,7 +52,16 @@ int main()
 			}
 			else if (currEvent.type == currEvent.KeyReleased && currEvent.key.code == sf::Keyboard::Enter)
 			{
-				currGame.EnterSquare();
+				if (elementSelected == false)
+				{
+					currGame.EnterSquare();
+					elementSelected = true;
+				}
+				else
+				{
+					currGame.MakeMove();
+					elementSelected = false;
+				}
 			}
 		}
 

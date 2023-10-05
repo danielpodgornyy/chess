@@ -17,11 +17,14 @@ class Board //: public sf::Drawable, public sf::Transformable
 
 		void SelectSquare(char movementDescision);
 		void EnterSquare();
+		void MakeMove();
 	private:
 		sf::RectangleShape tileArray[8][8];
 		ChessChar* charArray[8][8];
 		ChessChar* selectedSq;
+		ChessChar* enteredChar;
 		std::list<sf::CircleShape> optionDots;
+		int dotCounter;
 		const float DEFAULT_SIZEf = 100.f;
 		unsigned unsigned_DEFAULT_SIZE = static_cast<unsigned>(DEFAULT_SIZEf);
 };

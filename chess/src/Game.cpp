@@ -50,3 +50,9 @@ void Game::EnterSquare()
 {
 	chessBoard.EnterSquare();
 }
+
+void Game::MakeMove()
+{
+	chessBoard.MakeMove();
+}
+

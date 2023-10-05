@@ -17,6 +17,8 @@ class ChessChar
 		void setIsOpenSquare(bool inputBool);
 		void setIndex(sf::Vector2i inputIndex);
 		void setLockIn(bool inputBool);
+		bool getTaggedOption();
+		void setTaggedOption(bool inputBool);
 		void setCharType(char inputChar);
 		char getCharType();
 		bool getLockIn();
@@ -26,6 +28,7 @@ class ChessChar
 	protected:
 		bool color; //1 for white, 0 for black
 		bool isMovable;
+		bool taggedOption = false;
 		bool selected = false; //Move through board;
 		bool lockIn = false; //Ready to move
 		char charType = 'E';

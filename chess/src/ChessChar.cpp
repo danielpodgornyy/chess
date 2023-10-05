@@ -32,6 +32,17 @@ void ChessChar::setLockIn(bool inputBool)
 	lockIn = inputBool;
 }
 
+bool ChessChar::getTaggedOption()
+{
+	return taggedOption;
+}
+
+void ChessChar::setTaggedOption(bool inputBool)
+{
+	taggedOption = inputBool;
+}
+
+
 void ChessChar::setCharType(char inputChar)
 {
 	charType = inputChar;

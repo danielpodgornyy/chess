@@ -128,13 +128,15 @@ void Board::SelectSquare(char movementDescision)
 	int xCoord = selectedSq->getIndex().x;
 	int yCoord = selectedSq->getIndex().y;
 
+	/*
 	if (optionDots.size() > 0)
 	{
-		for (int i = 0; i < optionDots.size(); i++)
+		for (int i = 0; i < dotCounter; i++)
 		{
 			optionDots.pop_back();
 		}
 	}
+	*/
 
 
 	if (movementDescision == 'W')
@@ -234,7 +236,7 @@ void Board::SelectSquare(char movementDescision)
 
 void Board::EnterSquare()
 {
-
+	
 	if (optionDots.size() > 0)
 	{
 		return;
@@ -247,6 +249,8 @@ void Board::EnterSquare()
 
 	tempCirc.setFillColor(sf::Color(25,46,46, 155));
 	tempCirc.setRadius(30.f);
+
+	dotCounter = 0;
 
 	int xCoord = selectedSq->getIndex().x;
 	int yCoord = selectedSq->getIndex().y;
@@ -268,11 +272,13 @@ void Board::EnterSquare()
 
 			dotXPos = tileArray[xCoord][yCoord - i].getPosition().x;
 			dotYPos = tileArray[xCoord][yCoord - i].getPosition().y;
+			charArray[xCoord][yCoord - i]->setTaggedOption(true);
 
 			//The + 15.f is to put the dot in the middle
 			tempCirc.setPosition(sf::Vector2f(dotXPos + 50.f - 30.f, dotYPos + 50.f - 30.f));
-
+			
 			optionDots.push_back(tempCirc);
+			dotCounter++;
 		}
 		break;
 
@@ -280,13 +286,43 @@ void Board::EnterSquare()
 
 		for (int i = 1; i <= 7; i++)
 		{
+			if (charArray[xCoord][yCoord - i]->getCharType() != 'E')
+			{
+				return;
+			}
+
 			dotXPos = tileArray[xCoord][yCoord - i].getPosition().x;
 			dotYPos = tileArray[xCoord][yCoord - i].getPosition().y;
 
 			tempCirc.setPosition(sf::Vector2f(dotXPos + 50.f - 30.f, dotYPos + 50.f - 30.f));
 
 			optionDots.push_back(tempCirc);
+			dotCounter++;
 		}
 		break;
 	}
+}
+
+void Board::MakeMove()
+{
+	if (selectedSq->getTaggedOption())
+	{
+
+	}
+	else
+	{
+		for (int i = 0; i < dotCounter; i++)
+		{
+			optionDots.pop_back();
+		}
+
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 8; j++)
+			{
+				charArray[i][j]->setTaggedOption(false);
+			}
+		}
+	}
+
 }

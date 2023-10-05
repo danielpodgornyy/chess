@@ -16,6 +16,7 @@ class Game
 
 		void SelectSquare(char movementDescision);
 		void EnterSquare();
+		void MakeMove();
 	private:
 		Board chessBoard;
 		sf::Text title;
