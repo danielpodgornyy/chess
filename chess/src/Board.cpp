@@ -37,6 +37,22 @@ void Board::BuildBoard(sf::RenderWindow &inputWindow)
 	}
 }
 
+void Board::InitText()
+{
+	font.loadFromFile("OpenSans-Bold.ttf");
+
+	title.setCharacterSize(30);
+	title.setFillColor(sf::Color::White);
+	title.setPosition(20.f, 20.f);
+	title.setFont(font);
+	title.setString("CHESS");
+}
+
+void Board::BuildText(sf::RenderWindow& inputWindow)
+{
+	inputWindow.draw(title);
+}
+
 void Board::InitCharArray()
 {
 	for (int i = 0; i < 8; i++)
@@ -128,17 +144,6 @@ void Board::SelectSquare(char movementDescision)
 	int xCoord = selectedSq->getIndex().x;
 	int yCoord = selectedSq->getIndex().y;
 
-	/*
-	if (optionDots.size() > 0)
-	{
-		for (int i = 0; i < dotCounter; i++)
-		{
-			optionDots.pop_back();
-		}
-	}
-	*/
-
-
 	if (movementDescision == 'W')
 	{
 		if (yCoord - 1 < 0)
@@ -147,6 +152,8 @@ void Board::SelectSquare(char movementDescision)
 		}
 
 		selectedSq->setSelected(false);
+		selectedSq->setLockIn(false);
+
 		tileArray[xCoord][yCoord].setOutlineThickness(0);
 
 		charArray[xCoord][yCoord - 1]->setSelected(true);
@@ -165,6 +172,7 @@ void Board::SelectSquare(char movementDescision)
 
 		selectedSq->setSelected(false);
 		selectedSq->setLockIn(false);
+
 		tileArray[xCoord][yCoord].setOutlineThickness(0);
 
 		charArray[xCoord - 1][yCoord]->setSelected(true);
@@ -183,6 +191,7 @@ void Board::SelectSquare(char movementDescision)
 
 		selectedSq->setSelected(false);
 		selectedSq->setLockIn(false);
+
 		tileArray[xCoord][yCoord].setOutlineThickness(0);
 
 		charArray[xCoord ][yCoord + 1]->setSelected(true);
@@ -201,6 +210,7 @@ void Board::SelectSquare(char movementDescision)
 
 		selectedSq->setSelected(false);
 		selectedSq->setLockIn(false);
+
 		tileArray[xCoord][yCoord].setOutlineThickness(0);
 
 		charArray[xCoord + 1][yCoord]->setSelected(true);
@@ -242,21 +252,24 @@ void Board::EnterSquare()
 		return;
 	}
 
+	delete enteredChar;
+
+	enteredChar = new ChessChar;
+	*enteredChar = *selectedSq;
+
 	sf::CircleShape tempCirc;
+
+	tempCirc.setFillColor(sf::Color(25, 46, 46, 155));
+	tempCirc.setRadius(30.f);
 
 	float dotXPos;
 	float dotYPos;
-
-	tempCirc.setFillColor(sf::Color(25,46,46, 155));
-	tempCirc.setRadius(30.f);
 
 	dotCounter = 0;
 
 	int xCoord = selectedSq->getIndex().x;
 	int yCoord = selectedSq->getIndex().y;
 
-	selectedSq->setLockIn(true);
-	
 	tileArray[xCoord][yCoord].setOutlineColor(sf::Color::Blue);
 
 	switch (selectedSq->getCharType())
@@ -283,22 +296,43 @@ void Board::EnterSquare()
 		break;
 
 	case 'r':
-
+		//Pos y
 		for (int i = 1; i <= 7; i++)
 		{
-			if (charArray[xCoord][yCoord - i]->getCharType() != 'E')
+			if (charArray[xCoord][yCoord + i]->getCharType() != 'E')
 			{
-				return;
+				break;
 			}
 
-			dotXPos = tileArray[xCoord][yCoord - i].getPosition().x;
-			dotYPos = tileArray[xCoord][yCoord - i].getPosition().y;
+			dotXPos = tileArray[xCoord][yCoord + i].getPosition().x;
+			dotYPos = tileArray[xCoord][yCoord + 1].getPosition().y;
+			charArray[xCoord][yCoord + i]->setTaggedOption(true);
 
 			tempCirc.setPosition(sf::Vector2f(dotXPos + 50.f - 30.f, dotYPos + 50.f - 30.f));
 
 			optionDots.push_back(tempCirc);
 			dotCounter++;
 		}
+
+		//Neg y
+		for (int i = 1; i <= 7; i++)
+		{
+			std::cout << "Yo" << std::endl;
+			if (charArray[xCoord][yCoord]->getCharType() != 'E')
+			{
+				break;
+			}
+
+			dotXPos = tileArray[xCoord][yCoord + i].getPosition().x;
+			dotYPos = tileArray[xCoord][yCoord + i].getPosition().y;
+			charArray[xCoord][yCoord + i]->setTaggedOption(true);
+
+			tempCirc.setPosition(sf::Vector2f(dotXPos + 20.f, dotYPos + 20.f));
+
+			optionDots.push_back(tempCirc);
+			dotCounter++;
+		}
+
 		break;
 	}
 }
@@ -307,22 +341,59 @@ void Board::MakeMove()
 {
 	if (selectedSq->getTaggedOption())
 	{
+		sf::Vector2i enteredCharIndex = enteredChar->getIndex();
+		sf::Vector2i selectedCharIndex = selectedSq->getIndex();
 
-	}
-	else
-	{
-		for (int i = 0; i < dotCounter; i++)
-		{
-			optionDots.pop_back();
-		}
+		charArray[enteredCharIndex.x][enteredCharIndex.y] = new ChessChar;
+		charArray[enteredCharIndex.x][enteredCharIndex.y]->setCharType('E');
 
-		for (int i = 0; i < 8; i++)
+		charArray[enteredCharIndex.x][enteredCharIndex.y]->InitSprite();
+		charArray[enteredCharIndex.x][enteredCharIndex.y]->SetPos(enteredCharIndex.x * DEFAULT_SIZEf + 560.f, enteredCharIndex.y * DEFAULT_SIZEf + 140.f);
+		charArray[enteredCharIndex.x][enteredCharIndex.y]->setIndex(sf::Vector2i(enteredCharIndex.x, enteredCharIndex.y));
+
+		charArray[enteredCharIndex.x][enteredCharIndex.y]->setLockIn(false);
+
+		switch (enteredChar->getCharType())
 		{
-			for (int j = 0; j < 8; j++)
 			{
-				charArray[i][j]->setTaggedOption(false);
+		case 'p':
+
+			//delete charArray[selectedCharIndex.x][selectedCharIndex.y];
+
+			charArray[selectedCharIndex.x][selectedCharIndex.y] = new Pawn;
+			charArray[selectedCharIndex.x][selectedCharIndex.y]->setCharType('p');
+
+			break;
+
+		case 'r':
+
+			//delete charArray[selectedCharIndex.x][selectedCharIndex.y];
+
+			charArray[selectedCharIndex.x][selectedCharIndex.y] = new Rook;
+			charArray[selectedCharIndex.x][selectedCharIndex.y]->setCharType('r');
+
+			break;
 			}
 		}
+
+		charArray[selectedCharIndex.x][selectedCharIndex.y]->InitSprite();
+		charArray[selectedCharIndex.x][selectedCharIndex.y]->SetPos(selectedCharIndex.x * DEFAULT_SIZEf + 560.f, selectedCharIndex.y * DEFAULT_SIZEf + 140.f);
+		charArray[selectedCharIndex.x][selectedCharIndex.y]->setIndex(sf::Vector2i(selectedCharIndex.x, selectedCharIndex.y));
+
+
+
+	}	
+
+	for (int i = 0; i < dotCounter; i++)
+	{
+		optionDots.pop_back();
 	}
 
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			charArray[i][j]->setTaggedOption(false);
+		}
+	}
 }

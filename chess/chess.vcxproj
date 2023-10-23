@@ -157,7 +157,6 @@
   <ItemGroup>
     <ClCompile Include="src\Bishop.cpp" />
     <ClCompile Include="src\Board.cpp" />
-    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\King.cpp" />
     <ClCompile Include="src\Knight.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -172,7 +171,6 @@
   <ItemGroup>
     <ClInclude Include="src\Bishop.h" />
     <ClInclude Include="src\Board.h" />
-    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\ChessChar.h" />
     <ClInclude Include="src\King.h" />
     <ClInclude Include="src\Knight.h" />

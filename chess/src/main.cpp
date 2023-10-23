@@ -8,7 +8,7 @@ int main()
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
-	Game currGame;
+	Board chessBoard;
 	
 	//Mouse Position
 	sf::Vector2i mouseWinPos;
@@ -16,9 +16,9 @@ int main()
 	bool elementSelected = false;
 
 	//Initiallize game
-	currGame.InitBoard();
-	currGame.InitText();
-	currGame.InitCharArray();
+	chessBoard.InitBoard();
+	chessBoard.InitText();
+	chessBoard.InitCharArray();
 	
 	while (window.isOpen())
 	{
@@ -36,30 +36,30 @@ int main()
 			//Movement Keys
 			if (currEvent.type == currEvent.KeyReleased && currEvent.key.code == sf::Keyboard::W)
 			{
-				currGame.SelectSquare('W');
+				chessBoard.SelectSquare('W');
 			}
 			else if (currEvent.type == currEvent.KeyReleased && currEvent.key.code == sf::Keyboard::A)
 			{
-				currGame.SelectSquare('A');
+				chessBoard.SelectSquare('A');
 			}
 			else if (currEvent.type == currEvent.KeyReleased && currEvent.key.code == sf::Keyboard::S)
 			{
-				currGame.SelectSquare('S');
+				chessBoard.SelectSquare('S');
 			}
 			else if (currEvent.type == currEvent.KeyReleased && currEvent.key.code == sf::Keyboard::D)
 			{
-				currGame.SelectSquare('D');
+				chessBoard.SelectSquare('D');
 			}
 			else if (currEvent.type == currEvent.KeyReleased && currEvent.key.code == sf::Keyboard::Enter)
 			{
 				if (elementSelected == false)
 				{
-					currGame.EnterSquare();
+					chessBoard.EnterSquare();
 					elementSelected = true;
 				}
 				else
 				{
-					currGame.MakeMove();
+					chessBoard.MakeMove();
 					elementSelected = false;
 				}
 			}
@@ -71,10 +71,10 @@ int main()
 		window.clear(sf::Color(28,28,28));
 
 		//Build Game Board
-		currGame.BuildBoard(window);
-		currGame.BuildText(window);
-		currGame.BuildCharArray(window);
-		currGame.BuildOptions(window);
+		chessBoard.BuildBoard(window);
+		chessBoard.BuildText(window);
+		chessBoard.BuildCharArray(window);
+		chessBoard.BuildOptions(window);
 
 		//Display
 		window.display();

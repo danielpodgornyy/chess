@@ -11,14 +11,23 @@ class Board //: public sf::Drawable, public sf::Transformable
 	public:
 		void InitBoard();
 		void BuildBoard(sf::RenderWindow& inputWindow);
+
+		void InitText();
+		void BuildText(sf::RenderWindow& inputWindow);
+
 		void InitCharArray();
+
 		void BuildCharArray(sf::RenderWindow& inputWindow);
+
 		void BuildOptions(sf::RenderWindow& inputWindow);
 
 		void SelectSquare(char movementDescision);
 		void EnterSquare();
 		void MakeMove();
 	private:
+		sf::Text title;
+		sf::Font font;
+
 		sf::RectangleShape tileArray[8][8];
 		ChessChar* charArray[8][8];
 		ChessChar* selectedSq;
