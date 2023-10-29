@@ -17,11 +17,6 @@ void ChessChar::setColor(bool inputBool)
 	color = inputBool;
 }
 
-void ChessChar::setSelected(bool inputBool)
-{
-	selected = inputBool;
-}
-
 void ChessChar::setIndex(sf::Vector2i inputIndex)
 {
 	index = inputIndex;
@@ -30,6 +25,16 @@ void ChessChar::setIndex(sf::Vector2i inputIndex)
 void ChessChar::setLockIn(bool inputBool)
 {
 	lockIn = inputBool;
+}
+
+bool ChessChar::getCharPresent()
+{
+	return charPresent;
+}
+
+void ChessChar::setCharPresent(bool inputChar)
+{
+	charPresent = inputChar;
 }
 
 bool ChessChar::getTaggedOption()
@@ -71,9 +76,4 @@ sf::Vector2i ChessChar::getIndex()
 sf::Sprite ChessChar::GetSprite()
 {
 	return charSprite;
-}
-
-bool ChessChar::getSelected()
-{
-	return selected;
 }

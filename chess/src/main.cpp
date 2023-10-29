@@ -15,7 +15,7 @@ int main()
 
 	bool elementSelected = false;
 
-	//Initiallize game
+	//Initialize game
 	chessBoard.InitBoard();
 	chessBoard.InitText();
 	chessBoard.InitCharArray();
@@ -52,16 +52,7 @@ int main()
 			}
 			else if (currEvent.type == currEvent.KeyReleased && currEvent.key.code == sf::Keyboard::Enter)
 			{
-				if (elementSelected == false)
-				{
-					chessBoard.EnterSquare();
-					elementSelected = true;
-				}
-				else
-				{
-					chessBoard.MakeMove();
-					elementSelected = false;
-				}
+				chessBoard.Decide();
 			}
 		}
 

@@ -1,5 +1,6 @@
 #include "Board.h"
 
+//Builds the squares under the characters
 void Board::InitBoard()
 {
 	bool color = true; //true for white, false for black
@@ -17,6 +18,7 @@ void Board::InitBoard()
 			{
 				tileArray[i][j].setFillColor(sf::Color(18, 18, 18));
 			}
+
 			tileArray[i][j].setPosition(sf::Vector2f(i * DEFAULT_SIZEf + 560.f, j * DEFAULT_SIZEf + 140.f));
 			
 			color = !color;
@@ -25,6 +27,7 @@ void Board::InitBoard()
 	}
 }
 
+//Displays the squares under the characters
 void Board::BuildBoard(sf::RenderWindow &inputWindow)
 {
 
@@ -37,6 +40,7 @@ void Board::BuildBoard(sf::RenderWindow &inputWindow)
 	}
 }
 
+//Creates title
 void Board::InitText()
 {
 	font.loadFromFile("OpenSans-Bold.ttf");
@@ -48,10 +52,12 @@ void Board::InitText()
 	title.setString("CHESS");
 }
 
+//Builds title
 void Board::BuildText(sf::RenderWindow& inputWindow)
 {
 	inputWindow.draw(title);
 }
+
 
 void Board::InitCharArray()
 {
@@ -106,20 +112,34 @@ void Board::InitCharArray()
 			{
 				charArray[i][j] = new ChessChar;
 			}
+
 			charArray[i][j]->InitSprite();
 			charArray[i][j]->SetPos(i * DEFAULT_SIZEf + 560.f, j * DEFAULT_SIZEf + 140.f);
 			charArray[i][j]->setIndex(sf::Vector2i(i, j));
+			charArray[i][j]->setCharPresent(true);
 		}
 	}
 
-	charArray[0][7]->setSelected(true);
 	selectedSq = charArray[0][7];
-	tileArray[0][7].setOutlineThickness(-2);
-	tileArray[0][7].setOutlineColor(sf::Color::Green);
+	prevSelectedSq = charArray[0][7];
 }
 
 void Board::BuildCharArray(sf::RenderWindow& inputWindow)
 {
+
+	//	UPDATES SQUARE SELECTION
+
+	if (prevSelectedSq != selectedSq)
+	{
+		//Deselect the previously selected square
+		prevSelectedSq->setLockIn(false);
+		tileArray[prevSelectedSq->getIndex().x][prevSelectedSq->getIndex().y].setOutlineThickness(0);
+
+	}
+
+	//Update selected sq
+	tileArray[selectedSq->getIndex().x][selectedSq->getIndex().y].setOutlineThickness(-2);
+	tileArray[selectedSq->getIndex().x][selectedSq->getIndex().y].setOutlineColor(sf::Color::Green);
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -128,6 +148,8 @@ void Board::BuildCharArray(sf::RenderWindow& inputWindow)
 			inputWindow.draw(charArray[i][j]->GetSprite());
 		}
 	}
+
+	prevSelectedSq = selectedSq;
 }
 
 void Board::BuildOptions(sf::RenderWindow& inputWindow)
@@ -151,16 +173,6 @@ void Board::SelectSquare(char movementDescision)
 			return;
 		}
 
-		selectedSq->setSelected(false);
-		selectedSq->setLockIn(false);
-
-		tileArray[xCoord][yCoord].setOutlineThickness(0);
-
-		charArray[xCoord][yCoord - 1]->setSelected(true);
-
-		tileArray[xCoord][yCoord - 1].setOutlineThickness(-2);
-		tileArray[xCoord][yCoord - 1].setOutlineColor(sf::Color::Green);
-
 		selectedSq = charArray[xCoord][yCoord - 1];
 	}
 	else if (movementDescision == 'A')
@@ -169,16 +181,6 @@ void Board::SelectSquare(char movementDescision)
 		{
 			return;
 		}
-
-		selectedSq->setSelected(false);
-		selectedSq->setLockIn(false);
-
-		tileArray[xCoord][yCoord].setOutlineThickness(0);
-
-		charArray[xCoord - 1][yCoord]->setSelected(true);
-
-		tileArray[xCoord - 1][yCoord].setOutlineThickness(-2);
-		tileArray[xCoord - 1][yCoord].setOutlineColor(sf::Color::Green);
 
 		selectedSq = charArray[xCoord - 1][yCoord];
 	}
@@ -189,16 +191,6 @@ void Board::SelectSquare(char movementDescision)
 			return;
 		}
 
-		selectedSq->setSelected(false);
-		selectedSq->setLockIn(false);
-
-		tileArray[xCoord][yCoord].setOutlineThickness(0);
-
-		charArray[xCoord ][yCoord + 1]->setSelected(true);
-
-		tileArray[xCoord][yCoord + 1].setOutlineThickness(-2);
-		tileArray[xCoord][yCoord + 1].setOutlineColor(sf::Color::Green);
-
 		selectedSq = charArray[xCoord][yCoord + 1];
 	}
 	else if (movementDescision == 'D')
@@ -208,40 +200,28 @@ void Board::SelectSquare(char movementDescision)
 			return;
 		}
 
-		selectedSq->setSelected(false);
-		selectedSq->setLockIn(false);
-
-		tileArray[xCoord][yCoord].setOutlineThickness(0);
-
-		charArray[xCoord + 1][yCoord]->setSelected(true);
-
-		tileArray[xCoord + 1][yCoord].setOutlineThickness(-2);
-		tileArray[xCoord + 1][yCoord].setOutlineColor(sf::Color::Green);
-
 		selectedSq = charArray[xCoord + 1][yCoord];
 	}
+}
 
-	//MOUSE SELECTION SQUARE USING MOUSE DO LATER
-	/*
-	sf::Vector2u gridPos((mousePos.x / unsigned_DEFAULT_SIZE) - 560, (mousePos.y / unsigned_DEFAULT_SIZE) - 140);
-	std::cout << gridPos.x << " " << gridPos.y << std::endl;
-
-
-
-	for (int i = 0; i < 8; i++)
+void Board::Decide()
+{
+	if (!selectedSq->getCharPresent())
 	{
-		for (int j = 0; j < 8; j++)
-		{
-			if (gridPos == static_cast<sf::Vector2u>(charArray[i][j]->GetSprite().getPosition()))
-			{
-				tileArray[i][j].setFillColor(sf::Color::Black);
-				std::cout << charArray[i][j]->GetSprite().getPosition().x << " " << charArray[i][j]->GetSprite().getPosition().y << std::endl;
-				std::cout << gridPos.x << " " << gridPos.y << std::endl;
-			}
-		}
+		std::cout << "lol" << std::endl;
+		return;
 	}
 
-	*/	
+	if (!squareLockedIn)
+	{
+		std::cout << "lol!" << std::endl;
+		EnterSquare();
+	}
+	else
+	{
+		std::cout << "lol1" << std::endl;
+		MakeMove();
+	}
 }
 
 void Board::EnterSquare()
@@ -335,15 +315,18 @@ void Board::EnterSquare()
 
 		break;
 	}
+
+	squareLockedIn = true;
 }
 
 void Board::MakeMove()
 {
 	if (selectedSq->getTaggedOption())
 	{
-		sf::Vector2i enteredCharIndex = enteredChar->getIndex();
-		sf::Vector2i selectedCharIndex = selectedSq->getIndex();
+		sf::Vector2i enteredCharIndex = enteredChar->getIndex();//Old Pos
+		sf::Vector2i selectedCharIndex = selectedSq->getIndex();//New Pos
 
+		//Replace old position with empty square
 		charArray[enteredCharIndex.x][enteredCharIndex.y] = new ChessChar;
 		charArray[enteredCharIndex.x][enteredCharIndex.y]->setCharType('E');
 
@@ -353,6 +336,8 @@ void Board::MakeMove()
 
 		charArray[enteredCharIndex.x][enteredCharIndex.y]->setLockIn(false);
 
+
+		//Replace new position with the old squares character type
 		switch (enteredChar->getCharType())
 		{
 			{
@@ -380,8 +365,7 @@ void Board::MakeMove()
 		charArray[selectedCharIndex.x][selectedCharIndex.y]->SetPos(selectedCharIndex.x * DEFAULT_SIZEf + 560.f, selectedCharIndex.y * DEFAULT_SIZEf + 140.f);
 		charArray[selectedCharIndex.x][selectedCharIndex.y]->setIndex(sf::Vector2i(selectedCharIndex.x, selectedCharIndex.y));
 
-
-
+		squareLockedIn = false;
 	}	
 
 	for (int i = 0; i < dotCounter; i++)

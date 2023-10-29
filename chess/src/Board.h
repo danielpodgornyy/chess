@@ -21,6 +21,7 @@ class Board //: public sf::Drawable, public sf::Transformable
 
 		void BuildOptions(sf::RenderWindow& inputWindow);
 
+		void Decide();
 		void SelectSquare(char movementDescision);
 		void EnterSquare();
 		void MakeMove();
@@ -31,7 +32,10 @@ class Board //: public sf::Drawable, public sf::Transformable
 		sf::RectangleShape tileArray[8][8];
 		ChessChar* charArray[8][8];
 		ChessChar* selectedSq;
+		ChessChar* prevSelectedSq;
 		ChessChar* enteredChar;
+
+		bool squareLockedIn;
 		std::list<sf::CircleShape> optionDots;
 		int dotCounter;
 		const float DEFAULT_SIZEf = 100.f;
